@@ -1,32 +1,39 @@
 package com.example.fastcampusmysql.domain.member.entity;
 
-import com.example.fastcampusmysql.factory.MemberFixtureFactory;
+import com.example.fastcampusmysql.domain.member.util.MemberFixtureFactory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.stream.IntStream;
+import java.util.stream.LongStream;
+
 class MemberTest {
-
-    @DisplayName("회원은 닉네임을 변경할 수 있다")
+    @DisplayName("회원은 닉네임을 변경할 수 있다.")
     @Test
-    public void testChangeNickName() {
+    public void testChangeName() {
         var member = MemberFixtureFactory.create();
-        var expected = "cat";
+        var expected = "pnu";
 
-        member.changeNickname(expected);
+        member.changeNickName(expected);
 
         Assertions.assertEquals(expected, member.getNickname());
+//        LongStream.range(0, 10)
+//                .mapToObj(MemberFixtureFactory::create)
+//                .forEach(member -> {
+//                    System.out.println(member.getNickname());
+//                });
+
     }
 
-    @DisplayName("회원 닉네임의 길이는 10자를 초과할 수 없다")
+    @DisplayName("회원의 닉네임은 10자를 초과할수 없다")
     @Test
-    public void testNicknameMaxLength() {
+    public void testNicknameMaxLength(){
         var member = MemberFixtureFactory.create();
-        var overMaxLengthName = "superChairman";
-                                       
-        Assertions.assertThrows(
-                IllegalArgumentException.class,
-                () -> member.changeNickname(overMaxLengthName)
-        );
+        var overMaxLengthName = "pnupnupnupnupnupnu";
+
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            member.changeNickName(overMaxLengthName);
+        });
     }
-}
+ }
